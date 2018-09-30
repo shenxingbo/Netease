@@ -6,5 +6,5 @@ package com.code.db;
  * @Function: 提供数据库连接
  **/
 public class DbResource {
-
+    
 }

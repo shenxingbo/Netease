@@ -18,9 +18,11 @@ public class ProcessContent {
         for (String str : newsContentList) {
             newsContent += str;
         }
-        System.out.println(newsContent);
-        //String number = page.getJson().toString();
-        //System.out.println(number);
+        String newsUrl = page.getUrl().toString();
+        String newsId = newsUrl.substring(newsUrl.lastIndexOf("/")+1, newsUrl.lastIndexOf("."));
+
+        String contentUrl = "http://comment.api.163.com/api/v1/products/a2869674571f77b5a0867c3d71db5856/threads/"+newsId+"/comments/newList?ibc=newspc&limit=30&showLevelThreshold=72&headLimit=1&tailLimit=2&offset=0";
+        page.addTargetRequest(contentUrl);
         return false;
     }
 }

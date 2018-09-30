@@ -10,11 +10,14 @@ import us.codecraft.webmagic.Spider;
  **/
 public class Application {
     public static void main(String[] args) {
+        System.getProperties().setProperty("webdriver.chrome.driver",
+                "D:\\chromedriver\\chromedriver.exe");
+
         String[] urls = new String[3];
         urls[0]="http://gov.163.com/special/zwzx_n/";
-        //urls[1]="http://gov.163.com/special/locality/";
-        //urls[2]="http://gov.163.com/special/yangqi/";
+        urls[1]="http://gov.163.com/special/locality/";
+        urls[2]="http://gov.163.com/special/yangqi/";
 
-        Spider.create(new PageProcessorImpl()).addUrl(urls[0]).thread(5).run();
+        Spider.create(new PageProcessorImpl()).addUrl("http://gov.163.com/14/0523/10/9SU4J3E000234IGH.html").thread(5).run();
     }
 }
