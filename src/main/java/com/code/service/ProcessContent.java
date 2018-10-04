@@ -1,6 +1,9 @@
 package com.code.service;
 
 import java.util.*;
+
+import com.code.dao.NewsDao;
+import com.code.pojo.News;
 import us.codecraft.webmagic.Page;
 
 /**
@@ -10,7 +13,7 @@ import us.codecraft.webmagic.Page;
  **/
 public class ProcessContent {
     //
-    public static  boolean getContent(Page page) {
+    public static void getContent(Page page) {
         String newsTitle = page.getHtml().xpath("//*[@id=\"epContentLeft\"]/h1/text(0)").toString();
         String newsTime = page.getHtml().xpath("//*[@id=\"epContentLeft\"]/div[1]/text(0)").toString().trim().substring(0,19);
         List<String> newsContentList = page.getHtml().xpath("//*[@id=\"endText\"]/p/text(0)").all();
@@ -23,6 +26,12 @@ public class ProcessContent {
 
         String contentUrl = "http://comment.api.163.com/api/v1/products/a2869674571f77b5a0867c3d71db5856/threads/"+newsId+"/comments/newList?ibc=newspc&limit=30&showLevelThreshold=72&headLimit=1&tailLimit=2&offset=0";
         page.addTargetRequest(contentUrl);
-        return false;
+        News news = new News();
+        news.setNewsId(newsId);
+        news.setNewsUrl(newsUrl);
+        news.setNewsTitle(newsTitle);
+        news.setNewsContent(newsContent);
+        news.setNewsTime(newsTime);
+        NewsDao.insertNews(news);
     }
 }

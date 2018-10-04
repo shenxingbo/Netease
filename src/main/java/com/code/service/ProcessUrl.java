@@ -26,12 +26,4 @@ public class ProcessUrl {
         return result;
     }
 
-//    //根据新闻的url返回新闻的id
-//    public static String getNewsId(String url) {
-//
-//    }
-
-
-
-
 }

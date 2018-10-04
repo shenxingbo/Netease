@@ -1,6 +1,7 @@
 package com.code.service;
 
 import com.alibaba.fastjson.JSONObject;
+import com.code.dao.CommentDao;
 import com.code.pojo.Comment;
 import com.code.pojo.CommentsEntity;
 import us.codecraft.webmagic.Page;
@@ -25,25 +26,21 @@ public class PageProcessorImpl implements PageProcessor {
 
         //列表页
         if (page.getUrl().regex("http://gov\\.163\\.com/special/\\D+\\d*/").match()) {
-            System.out.println("列表");
             page.addTargetRequests(ProcessUrl.getTitleUrl(page));
             page.addTargetRequests(ProcessUrl.getTitlePageNumberUrl(page));
-
             //新闻内容页面
         }else if (page.getUrl().regex("http://gov\\.163\\.com/\\d{2}/\\d{4}/\\d{2}/\\w+\\.html").match()) {
-            System.out.println("新闻");
             ProcessContent.getContent(page);
+            
         } else { //新闻评论
-            System.out.println("pppp");
             try {
 
                 String str = page.getHtml().xpath("//body/text(0)").toString();
+
+                System.out.println(page.getUrl());
                 CommentsEntity ce = JSONObject.parseObject(str, CommentsEntity.class);
 
-                for (Map.Entry<String, Comment> entry : ce.getComments().entrySet()) {
-                    System.out.println(entry.toString());
-                }
-
+                CommentDao.insertComments(ce);
                 //循环取评论数据
                 Integer size = Integer.parseInt(ce.getNewListSize());
                 String url = page.getUrl().toString();
@@ -52,8 +49,6 @@ public class PageProcessorImpl implements PageProcessor {
 
                 if (0 != size && index == 0) {
                     System.out.println("取评论数据");
-
-                    System.out.println("转变之前 " + url);
                     url = url.substring(0, url.lastIndexOf("=") + 1);
                     System.out.println(url);
                     int count = size / 30;

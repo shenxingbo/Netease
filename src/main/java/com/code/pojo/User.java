@@ -8,6 +8,24 @@ package com.code.pojo;
 public class User {
     private String location;
     private String userId;
+    private String userType;
+
+    public User() {
+    }
+
+    public String getUserType() {
+        return userType;
+    }
+
+    public void setUserType(String userType) {
+        this.userType = userType;
+    }
+
+    public User(String location, String userId, String userType) {
+        this.location = location;
+        this.userId = userId;
+        this.userType = userType;
+    }
 
     public String getLocation() {
         return location;

@@ -18,6 +18,6 @@ public class Application {
         urls[1]="http://gov.163.com/special/locality/";
         urls[2]="http://gov.163.com/special/yangqi/";
 
-        Spider.create(new PageProcessorImpl()).addUrl("http://gov.163.com/14/0523/10/9SU4J3E000234IGH.html").thread(5).run();
+        Spider.create(new PageProcessorImpl()).addUrl(urls).thread(5).run();
     }
 }
